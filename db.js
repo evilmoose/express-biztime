@@ -1,13 +1,20 @@
 /** Database setup for BizTime. */
-require('dotenv').config()
+const pg = require('pg');
+//or native libpq bindings
+//var pg = require('pg').native
 
-const { Client } = require("pg");
-
-const client = new Client({
-  connectionString: process.env.DB_ADDRESS
+var conString =  "postgres://oijhhogf:cOMgwqnSN9MYah0qHIODvIjVX9GMGELo@bubble.db.elephantsql.com/oijhhogf"
+var client = new pg.Client(conString);
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query('SELECT NOW() AS "theTime"', function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows[0].theTime);
+    // >> output: 2018-08-23T14:02:57.117Z
+    client.end();
+  });
 });
-
-client.connect();
-
-
-module.exports = client;

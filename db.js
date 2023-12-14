@@ -1,9 +1,10 @@
 /** Database setup for BizTime. */
+require('dotenv').config()
 
 const { Client } = require("pg");
 
 const client = new Client({
-  connectionString: "postgresql://ronaldlopez:123456@127.0.0.1:5432/biztime"
+  connectionString: process.env.DB_ADDRESS
 });
 
 client.connect();

@@ -1,12 +1,11 @@
 const express = require("express");
-const slugify = require("slugify");
 const ExpressError = require("../expressError")
 const db = require("../db");
 
 let router = new express.Router();
 
 // GET /companies :
-router.get("/companies", async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   try {
     const result = await db.query(
           `SELECT code, name 
